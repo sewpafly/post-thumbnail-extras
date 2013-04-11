@@ -1,9 +1,9 @@
 <?php
 
 class PTXShortcode {
-   public function __construct(){
-      add_shortcode( 'pt', array( $this, 'parseShortcode' ) );
-   }
+	public function __construct() {
+		add_shortcode( 'pt', array( $this, 'parse_shortcode' ) );
+	}
 
 	/**
 	 * parse and output the link for a post-thumbnail
@@ -14,7 +14,7 @@ class PTXShortcode {
 	 *			[size] the post-thumbnail size to use
 	 *	@return string HTML content to display post-thumbnail.
 	 */
-   public function parseShortcode( $attrs ){
+	public function parse_shortcode( $attrs ) {
 		$post = get_post();
 		extract( shortcode_atts( array(
 			'id' => get_post_thumbnail_id( $post->ID ),
@@ -23,7 +23,6 @@ class PTXShortcode {
 		), $attrs ) );
 
 		return wp_get_attachment_image( $id, $size, false, array( 'class' => $class ) );
-   }
+	}
 }
 
-?>

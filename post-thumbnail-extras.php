@@ -9,42 +9,51 @@ Description: Little things that make using post thumbnails easier
 /* 
  * Useful constants  
  */
-//define( 'PTX_PLUGINURL', plugins_url(basename( dirname(__FILE__))) . "/");
-//define( 'PTX_PLUGINPATH', dirname(__FILE__) . "/");
-//define( 'PTX_VERSION', "1.0");
+define( 'PTX_DOMAIN', 'post-thumbnail-extras' );
 
 class PostThumbnailExtras {
-	private $requires = array( 'php/shortcode.php' );
-	private function loadRequires(){
-		$path = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
-		foreach ( $this->requires as $require ){
-			require( $path . $require );
-		}
-	}
-
 	public function __construct(){
+		// Wordpress hooks and settings
 		add_action( 'init', array( $this, 'i18n' ) );
+		foreach ( get_option( 'ptx_post_thumbnails' ) as $thumbnail ){
+			add_image_size( $thumbnail['name']
+				, $thumbnail['width']
+				, $thumbnail['height']
+				, $thumbnail['crop']
+			);
+		}
 
 		/*
 		 * Load sub-objects
 		 */
-		$this->loadRequires();
+		$this->load_requires();
 		$s = new PTXShortcode();
+		$o = new PTXOptions();
 	}
 
 	/**
 	 * Internationalization and Localization
 	 */
 	public function i18n(){
-		$domain = 'post-thumbnail-extras';
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-		load_textdomain( $domain
-			, WP_LANG_DIR.'/'.$domain.'/'.$domain.'-'.$locale.'.mo' );
-		load_plugin_textdomain( $domain
+		$locale = apply_filters( 'plugin_locale', get_locale(), PTX_DOMAIN );
+		load_textdomain( PTX_DOMAIN
+			, WP_LANG_DIR.'/'.PTX_DOMAIN.'/'.PTX_DOMAIN.'-'.$locale.'.mo' );
+		load_plugin_textdomain( PTX_DOMAIN
 			, FALSE
-			, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
+			, dirname( plugin_basename( __FILE__ ) ) . '/i18n/' );
 	}
+
+	private $requires = array( 'php/shortcode.php'
+		, 'php/options.php'
+	);
+
+	private function load_requires(){
+		$path = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
+		foreach ( $this->requires as $require ){
+			require( $path . $require );
+		}
+	}
+
 }
 
 $ptx = new PostThumbnailExtras();
-?>
