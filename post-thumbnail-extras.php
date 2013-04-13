@@ -1,10 +1,12 @@
 <?php
 /*
 Plugin name: Post Thumbnail Extras
+Plugin URI: https://github.com/sewpafly/post-thumbnail-extras
 Author: sewpafly
-Version: 1.0
+Author URI: http://sewpafly.github.io/post-thumbnail-editor/
+Version: 2.0
 Description: Little things that make using post thumbnails easier
- */
+*/
 
 /* 
  * Useful constants  
@@ -15,12 +17,15 @@ class PostThumbnailExtras {
 	public function __construct(){
 		// Wordpress hooks and settings
 		add_action( 'init', array( $this, 'i18n' ) );
-		foreach ( get_option( 'ptx_post_thumbnails' ) as $thumbnail ){
-			add_image_size( $thumbnail['name']
-				, $thumbnail['width']
-				, $thumbnail['height']
-				, $thumbnail['crop']
-			);
+
+		if ( false !== $ptx_post_thumbnails = get_option( 'ptx_post_thumbnails' ) ) {
+			foreach ( get_option( 'ptx_post_thumbnails' ) as $thumbnail ){
+				add_image_size( $thumbnail['name']
+					, $thumbnail['width']
+					, $thumbnail['height']
+					, $thumbnail['crop']
+				);
+			}
 		}
 
 		/*

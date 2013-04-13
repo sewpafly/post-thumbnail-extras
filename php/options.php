@@ -8,6 +8,7 @@ class PTXOptions {
 	public function admin_init() {
 		add_settings_field( 'ptx-post-thumbnails'
 			, '<b>' . __('Post Thumbnail Extra Sizes', PTX_DOMAIN) . '</b>'
+				. '&nbsp;<a class="ptx-add-thumb" href="#">+</a>'
 			, array( $this, 'create_post_thumbnails_html' )
 			, 'media'
 			, 'default'
@@ -29,26 +30,43 @@ class PTXOptions {
 				$output .= self::thumbnail_html( $thumbnail );
 			}
 		}
+		$output .= '<script id="ptx-template" type="text/template">';
 		$output .= self::thumbnail_html();
+		$output .= '</script>';
 		$output .= <<<EOT
 		<script type="text/javascript" charset="utf-8">
 			(function($){
 				$(function(){
-					$(".ptx-delete-thumb").click(function(){
-						$(this).parents("tr").get(0).remove();
+					var post_template = $('#ptx-template').html();
+					$('.ptx-add-thumb').click(function(e){
+						e.preventDefault();
+						$(this).parents('tr').siblings().last().after($(post_template));
+					});
+					$('body').delegate('.ptx-delete-thumb', 'click', function(e){
+						e.preventDefault();
+						$(this).parents('tr').first().remove();
 					});
 				})
 			})(jQuery);
 		</script>
+		<style type="text/css" media="all">
+			.ptx-add-thumb {
+				color: #44bb44 !important;
+				font-size: 1.5em;
+				font-weight: bold;
+				text-decoration: none;
+			}
+			.ptx-delete-thumb {
+				color: red;
+				font-size: smaller;
+			}
+		</style>
 
 EOT;
 		echo( $output );
 	}
 
 	private static function thumbnail_html( $thumbnail = NULL ) {
-		$delete = sprintf( '<a href="#" tabindex="999" style="color:red;font-size:smaller;" class="ptx-delete-thumb">%s</a>'
-			, __( 'Delete', PTX_DOMAIN )
-		);
 		$value = "value={$thumbnail['name']}";
 		if ( is_null( $thumbnail ) ) {
 			$thumbnail = array( 'name' => 'new-name'
@@ -56,7 +74,6 @@ EOT;
 				, 'height' => 150
 				, 'crop' => true
 			);
-			$delete = "";
 			$value = "";
 		}
 		$checked = checked( $thumbnail['crop'], true, false );
@@ -67,7 +84,7 @@ EOT;
 						name="ptx_post_thumbnails[{$thumbnail['name']}][name]" 
 						id="ptx_post_thumbnails[{$thumbnail['name']}][name]" 
 						placeholder="{$thumbnail['name']}" /><br/>
-				$delete
+				<a href="#" tabindex="999" class="ptx-delete-thumb">%s</a>
 			</th>
 			<td>
 				<label for="ptx_post_thumbnails[{$thumbnail['name']}][width]">%s</label>
@@ -88,6 +105,7 @@ EOT;
 
 EOT;
 		return sprintf( $html
+			, __( 'Delete', PTX_DOMAIN )
 			, __( 'Width', PTX_DOMAIN )
 			, __( 'Height', PTX_DOMAIN )
 			, __( 'Crop to exact dimensions', PTX_DOMAIN )
@@ -108,19 +126,24 @@ EOT;
 		//);
 
 		$new_input = array();
+		$counter = 0;
+		$pattern = "/[^[:alnum:]-]+/";
 		foreach ( $input as $name => $thumbnail ) {
 			if ( !isset( $thumbnail['name'] ) || $thumbnail['name'] == "" )
 				if ( $name == "new-name" )
-					continue;
+					$thumbnail['name'] = 'new-name-' . preg_replace( $pattern, "", uniqid() );
 				else
 					$thumbnail['name'] = $name;
 
 			//add_settings_error( 'ptx-post-thumbnails'
 			//    , NULL, "'$thumbnail[name]'");
 			// Validate the name
-			if ( preg_match( "/[^[:alnum:]-]+/", $thumbnail['name'] ) ) {
+			if ( preg_match( "$pattern", $thumbnail['name'] ) ) {
 				add_settings_error( 'ptx-post-thumbnails'
-					, NULL, __( "Post Thumbnail Name must contain only alphanumeric characters and '-'.", PTX_DOMAIN ));
+					, NULL
+					, sprintf("%s: %s"
+						, __( "Post Thumbnail Name must contain only alphanumeric characters and '-'.", PTX_DOMAIN )
+						, $thumbnail['name']));
 				continue;
 			}
 
