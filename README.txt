@@ -38,6 +38,7 @@ Use the shortcode `[pt]` in your posts to quickly embed the featured image as a 
 Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems](https://github.com/sewpafly/post-thumbnail-extra/issues) and I'll see what I can do.
 
 == Screenshots ==
+
 1. In Settings &rarr; Media, click the plus sign to add a new post thumbnail. 
 2. Update the width/height and whether or not the post-thumbnail should be cropped to an exact size. (If the width or height is set to 0, that boundary constraint is not enforced). Make sure you click the "save" button so that the changes are stored in the database.
 
