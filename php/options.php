@@ -37,10 +37,11 @@ class PTXOptions {
 		<script type="text/javascript" charset="utf-8">
 			(function($){
 				$(function(){
-					var post_template = $('#ptx-template').html();
+					var post_template = $('#ptx-template').html(), counter = 0;
 					$('.ptx-add-thumb').click(function(e){
 						e.preventDefault();
-						$(this).parents('tr').siblings().last().after($(post_template));
+						var html = post_template.replace(/new-name/g, 'new-name-' + counter++);
+						$(this).parents('tr').siblings().last().after($(html));
 					});
 					$('body').delegate('.ptx-delete-thumb', 'click', function(e){
 						e.preventDefault();
@@ -129,16 +130,18 @@ EOT;
 		$counter = 0;
 		$pattern = "/[^[:alnum:]-]+/";
 		foreach ( $input as $name => $thumbnail ) {
-			if ( !isset( $thumbnail['name'] ) || $thumbnail['name'] == "" )
-				if ( $name == "new-name" )
+			if ( !isset( $thumbnail['name'] ) || $thumbnail['name'] == "" ) {
+				if ( preg_match( "/^new-name-[0-9]{1,2}/", $name ) ) {
 					$thumbnail['name'] = 'new-name-' . preg_replace( $pattern, "", uniqid() );
-				else
+				} else {
 					$thumbnail['name'] = $name;
+				}
+			}
 
 			//add_settings_error( 'ptx-post-thumbnails'
 			//    , NULL, "'$thumbnail[name]'");
 			// Validate the name
-			if ( preg_match( "$pattern", $thumbnail['name'] ) ) {
+			if ( preg_match( $pattern, $thumbnail['name'] ) ) {
 				add_settings_error( 'ptx-post-thumbnails'
 					, NULL
 					, sprintf("%s: %s"
