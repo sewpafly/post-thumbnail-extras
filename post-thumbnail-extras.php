@@ -12,6 +12,7 @@ Description: Little things that make using post thumbnails easier
  * Useful constants  
  */
 define( 'PTX_DOMAIN', 'post-thumbnail-extras' );
+define( 'PTX_PLUGINURL', plugins_url(basename( dirname(__FILE__))) . "/");
 
 class PostThumbnailExtras {
 	public function __construct(){
@@ -32,8 +33,8 @@ class PostThumbnailExtras {
 		 * Load sub-objects
 		 */
 		$this->load_requires();
-		$s = new PTXShortcode();
-		$o = new PTXOptions();
+		//$s = new PTXShortcode();
+		//$o = new PTXOptions();
 	}
 
 	/**

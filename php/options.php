@@ -125,8 +125,11 @@ EOT;
 		//    , sprintf( "INPUT: '%s'", print_r( $input, true ) )
 		//    , 'updated'
 		//);
-
 		$new_input = array();
+
+		if ( ! is_array( $input ) )
+			return $new_input;
+
 		$counter = 0;
 		$pattern = "/[^[:alnum:]-]+/";
 		foreach ( $input as $name => $thumbnail ) {
@@ -169,3 +172,4 @@ EOT;
 	}
 }
 
+$PTX_OPTIONS = new PTXOptions();
