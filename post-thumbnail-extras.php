@@ -33,8 +33,6 @@ class PostThumbnailExtras {
 		 * Load sub-objects
 		 */
 		$this->load_requires();
-		//$s = new PTXShortcode();
-		//$o = new PTXOptions();
 	}
 
 	/**
