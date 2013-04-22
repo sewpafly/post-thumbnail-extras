@@ -62,6 +62,7 @@ class PTXOptions {
 				font-size: smaller;
 			}
 		</style>
+		<td><tr>
 
 EOT;
 		echo( $output );

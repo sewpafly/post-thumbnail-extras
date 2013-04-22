@@ -63,7 +63,24 @@ class PTXShortcode {
 	}
 
 	/**
-	 * Fix attachment
+	 * In the prepare_attachment_for_js ajax call, it marshalls a list of
+	 * attachment metadata used for adding to the media-library sidebar. If we want
+	 * the other post thumbnails to show up, we have to add them here.
+	 *
+	 * _Sidenotes_:
+	 *
+	 * 1. If the post-thumbnail has not yet been generated, and the user selects
+	 *    a post-thumbnail and does an "Insert into Post", it will link to the fullsize
+	 *    image and the browser will resize it inefficiently.
+	 *
+	 * 2. I tried using the image_downsize filter, but that caused an infinite loop
+	 *    with the wp_get_attachment_* methods.
+	 *
+	 * See <wp-includes/media.php> for more information.
+	 *
+	 * @param $response - the metadata being returned to the client
+	 * @param $attachment = wp_get_attachment_metadata for the post
+	 * @param $meta - Other metadata
 	 */
 	public function fix_attachment( $response, $attachment, $meta ) {
 		$predefined = array( 'thumbnail', 'medium', 'large', 'full' );
