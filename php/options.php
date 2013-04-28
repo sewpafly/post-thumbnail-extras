@@ -62,7 +62,6 @@ class PTXOptions {
 				font-size: smaller;
 			}
 		</style>
-		<td><tr>
 
 EOT;
 		echo( $output );
@@ -121,6 +120,7 @@ EOT;
 	 *       '0' is unlimited and might be a better choice
 	 */
 	public function sanitize_post_thumbnails( $input ) {
+		$too_large = 2000;
 		//add_settings_error( 'ptx-post-thumbnails'
 		//    , 'not-really-helpful'
 		//    , sprintf( "INPUT: '%s'", print_r( $input, true ) )
@@ -157,6 +157,14 @@ EOT;
 			$thumbnail['width'] = abs( intval( $thumbnail['width'] ) );
 			$thumbnail['height'] = abs( intval( $thumbnail['height'] ) );
 			$thumbnail['crop'] = ( isset( $thumbnail['crop'] ) && $thumbnail['crop'] );
+
+			if ( $too_large < $thumbnail['width'] || $too_large < $thumbnail['height'] ) {
+				add_settings_error( 'ptx-post-thumbnails'
+					, NULL
+					, sprintf( __( "Consider using 0 for an unlimited size side (%s)", PTX_DOMAIN ), $thumbnail['name'] )
+					, 'updated');
+			}
+
 
 			$new_input[] = $thumbnail;
 		}
