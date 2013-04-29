@@ -1,0 +1,89 @@
+# Copyright (C) 2013 Post Thumbnail Extras
+# This file is distributed under the same license as the Post Thumbnail Extras package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Post Thumbnail Extras 3.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/post-thumbnail-extras\n"
+"POT-Creation-Date: 2013-04-29 05:16:12+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: php/options.php:10
+msgid "Post Thumbnail Extra Sizes"
+msgstr ""
+
+#: php/options.php:24
+msgid "Post Thumbnail Extras - Display other post thumbnails"
+msgstr ""
+
+#: php/options.php:118
+msgid "Delete"
+msgstr ""
+
+#: php/options.php:119 php/options.php:204
+msgid "Width"
+msgstr ""
+
+#: php/options.php:120 php/options.php:205
+msgid "Height"
+msgstr ""
+
+#: php/options.php:121
+msgid "Crop to exact dimensions"
+msgstr ""
+
+#: php/options.php:161
+msgid "Post Thumbnail Name must contain only alphanumeric characters and '-'."
+msgstr ""
+
+#: php/options.php:173
+msgid "Consider using 0 for an unlimited size side (%s)"
+msgstr ""
+
+#: php/options.php:199
+msgid "No additional image sizes defined"
+msgstr ""
+
+#: php/options.php:203
+msgid "Name"
+msgstr ""
+
+#: php/options.php:206
+msgid "Crop"
+msgstr ""
+
+#: php/options.php:248
+msgid "True"
+msgstr ""
+
+#: php/options.php:248
+msgid "False"
+msgstr ""
+
+#: php/shortcode.php:48
+msgid "Insert Shortcode"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Post Thumbnail Extras"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/sewpafly/post-thumbnail-extras"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Little things that make using post thumbnails easier"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "sewpafly"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://sewpafly.github.io/post-thumbnail-editor/"
+msgstr ""
