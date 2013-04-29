@@ -7,15 +7,24 @@ class PTXOptions {
 
 	public function admin_init() {
 		add_settings_field( 'ptx-post-thumbnails'
-			, '<b>' . __('Post Thumbnail Extra Sizes', PTX_DOMAIN) . '</b>'
+			, '<b>' . __( 'Post Thumbnail Extra Sizes', PTX_DOMAIN ) . '</b>'
 				. '&nbsp;<a class="ptx-add-thumb" href="#">+</a>'
 			, array( $this, 'create_post_thumbnails_html' )
 			, 'media'
 			, 'default'
 		);
+		// Register the settings to be handled by wordpress and the callback function
 		register_setting( 'media'
 			, 'ptx_post_thumbnails'
 			, array( $this, 'sanitize_post_thumbnails' ) );
+
+		// Add a section for displaying other Post Thumbnails and their metadata
+		// (e.g. width, height, crop)
+		add_settings_section( 'ptx-other-post-thumbnails'
+			, __( 'Post Thumbnail Extras - Display other post thumbnails', PTX_DOMAIN )
+			, array( $this, 'other_post_thumbnails_html' )
+			, 'media'
+		);
 	}
 
 	/**
@@ -178,6 +187,91 @@ EOT;
 		//);
 
 		return $new_input;
+	}
+
+	/**
+	 * Display post thumbnail metadata for other post thumbnails defined elsewhere
+	 */
+	public function other_post_thumbnails_html() {
+		$thumbnails = $this->get_other_intermediate_image_sizes();
+
+		if ( ! isset( $thumbnails ) || 0 == count( $thumbnails ) ) {
+			_e( "No additional image sizes defined", PTX_DOMAIN );
+			return;
+		}
+
+		$name = __( 'Name', PTX_DOMAIN );
+		$width = __( 'Width', PTX_DOMAIN );
+		$height = __( 'Height', PTX_DOMAIN );
+		$crop = __( 'Crop', PTX_DOMAIN );
+		$output = <<<EOT
+<style type="text/css" media="all">
+	#ptx-other-post-thumbnails {
+		width: 50%%;
+	}
+	.widefat thead th:first-of-type {
+		padding-left: 8px;
+	}
+	.widefat.media .check-column {
+		padding-bottom: 8px;
+	}
+</style>
+<table id="ptx-other-post-thumbnails" class="wp-list-table widefat fixed media" cellspacing="0">
+	<thead>
+		<tr>
+			<th class="manage-column column-name check-column" style="">
+				$name
+			</th>
+			<th class="manage-column check-column" style="">
+				$width
+			</th>
+			<th class="manage-column check-column" style="">
+				$height
+			</th>
+			<th class="manage-column check-column" style="">
+				$crop
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		%s
+	</tbody>
+</table>
+EOT;
+		$body = "";
+		$row = "<tr><td>%s</td><td>%d</td><td>%d</td><td>%s</td></tr>";
+		foreach ( $thumbnails as $name => $thumbnail ) {
+			$body .= sprintf( $row
+				, $name
+				, $thumbnail['width']
+				, $thumbnail['height']
+				, ( true == $thumbnail['crop'] ) ? __( 'True' ) : __( 'False' )
+			);
+		}
+
+		print( sprintf( $output, $body ) );
+	}
+
+	/**
+	 * Ignore 'large', 'medium', 'thumbnail' and any ptx_thumbs
+	 */
+	public function get_other_intermediate_image_sizes() {
+		global $_wp_additional_image_sizes;
+		$filter = array( 'large', 'medium', 'thumbnail' );
+
+		$ptx_post_thumbnails = get_option( 'ptx_post_thumbnails' );
+		if ( isset( $ptx_post_thumbnails ) and is_array( $ptx_post_thumbnails ) ){
+			foreach ( get_option( 'ptx_post_thumbnails' ) as $thumb ) {
+				$filter[] = $thumb['name'];
+			}
+		}
+
+		foreach ( $_wp_additional_image_sizes as $name => $thumb ) {
+			if ( ! in_array( $name, $filter ) ) {
+				$return[$name] = $thumb;
+			}
+		}
+		return $return;
 	}
 }
 
