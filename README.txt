@@ -14,17 +14,20 @@ Make using post thumbnails easier for everyday wordpressing.
 = Features =
 
 * Provides a shortcode as a wrapper for the `wp_get_attachment_image` call. Allows your posts to quickly change the picture in your posts without wading through HTML (nice if your post-thumbnails change width or height due to a theme change or you have cropped them with another tool -- this will always pull the latest image from wordpress).
+* Includes a hook into the media library to create the above shortcode.
 * Add and manage post thumbnails via the media screen.
 
 = Future Plans =
 
-In the future, there will be support for changing the default option, a hook into the media gallery to embed the shortcode via the GUI, and any other neat ideas I can come up with. Submit any other ideas at https://github.com/sewpafly/post-thumbnail-extras/issues.
+In the future, there will be support for changing the default option, and any other ideas I can come up with. Submit any other ideas at https://github.com/sewpafly/post-thumbnail-extras/issues.
 
 == Installation ==
 
 = Shortcode =
 
 Use the shortcode `[pt]` in your posts to quickly embed the featured image as a thumbnail. Use the attribute 'size' to change to a different post-thumbnail size (e.g. `[pt size='medium']`). You can also use any image in your media gallery if you know the id, by using the `id` attribute (`[pt id='100']`).
+
+Use the media library to quickly add this shortcode by pressing the "Insert shortcode button".
 
 = Add/Delete Post Thumbnails =
 
@@ -41,8 +44,13 @@ Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems]
 
 1. In Settings &rarr; Media, click the plus sign to add a new post thumbnail. 
 2. Update the width/height and whether or not the post-thumbnail should be cropped to an exact size. (If the width or height is set to 0, that boundary constraint is not enforced). Make sure you click the "save" button so that the changes are stored in the database.
+3. In the media editor, you can choose to insert a shortcode of a single picture with the new button.
 
 == Changelog ==
+
+= 3.0 =
+* Shortcode Creation with the Media Library
+* Display post thumbnail information for thumbnails created by other plugins and themes
 
 = 2.0 =
 * CRUD (Create/Read/Update/Delete) operations on post-thumbnails
@@ -51,5 +59,5 @@ Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems]
 * Initial cut
 
 == Upgrade Notice ==
-= 2.0 =
-New CRUD operations on post-thumbnails
+= 3.0 =
+Integration with the Media Library for shortcode creation
