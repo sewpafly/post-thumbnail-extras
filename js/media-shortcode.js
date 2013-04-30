@@ -53,7 +53,18 @@
       // then when the mapping is complete send the arrays as text to the editor
       $.when.apply( $, selection.map( function( attachment ) {
          var display = state.display( attachment ).toJSON();
-         return "[pt id="+ attachment.id +" size='"+ display.size +"']";
+         var shortcode = {};
+         shortcode.id = attachment.id;
+         if (display.size != 'thumbnail')
+            shortcode.size = display.size;
+         if (display.link != 'none')
+            shortcode.link = (display.link != 'custom') ? display.link : display.linkUrl;
+         if (display.align != 'none')
+            shortcode['class'] = "align" + display.align;
+         // Take all the attributes and create a string of key=value pairs to pass to the
+         // shortcode
+         var attributes = _.map(shortcode, function(v,k){ return k + "='" + v + "'";})
+         return "[pt " + attributes.join(" ") + "]";
       } ) ).done( function() {
          //}, this ) ).done( function() {
          wp.media.editor.insert( _.toArray( arguments ).join("\n\n") );

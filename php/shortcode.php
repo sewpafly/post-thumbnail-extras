@@ -17,6 +17,7 @@ class PTXShortcode {
 	 *				with the following variables set:
 	 *			[id] the id of the image to use from the media library - defaults to the featured-image
 	 *			[size] the post-thumbnail size to use
+	 *			[link] where should the link point to? 'file', 'post', 'none', or an arbitrary URL.
 	 *	@return string HTML content to display post-thumbnail.
 	 */
 	public function parse_shortcode( $attrs ) {
@@ -24,10 +25,29 @@ class PTXShortcode {
 		extract( shortcode_atts( array(
 			'id' => get_post_thumbnail_id( $post->ID ),
 			'size' => 'thumbnail',
-			'class' => 'pt-post-thumbnail'
+			'class' => 'pt-post-thumbnail',
+			'link' => 'none'
 		), $attrs ) );
 
-		return wp_get_attachment_image( $id, $size, false, array( 'class' => $class ) );
+		if ( ! wp_attachment_is_image( $id ) ) return;
+
+		$html = wp_get_attachment_image( $id, $size, false, array( 'class' => $class ) );
+
+		switch( $link ) {
+		case 'none':
+			return $html;
+			break;
+		case 'file':
+			$link_url = wp_get_attachment_url( $id );
+			break;
+		case 'post':
+			$link_url = get_attachment_link( $id );
+			break;
+		default:
+			$link_url = $link;
+		}
+
+		return "<a href='$link_url'>$html</a>";
 	}
 
 	/**
