@@ -13,13 +13,13 @@ Make using post thumbnails easier for everyday wordpressing.
 
 = Features =
 
-* Provides a shortcode as a wrapper for the `wp_get_attachment_image` call. Allows your posts to quickly change the picture in your posts without wading through HTML (nice if your post-thumbnails change width or height due to a theme change or you have cropped them with another tool -- this will always pull the latest image from wordpress).
+* Provides a shortcode for embedding post-thumbnails. Authors can quickly change pictures in posts without wading through HTML.  This can be awesome in several ways: if your post-thumbnails change the width or height due to a theme change, or if you have cropped them with another tool -- this will always pull wordpress' latest image).
 * Includes a hook into the media library to create the above shortcode.
-* Add and manage post thumbnails via the media screen.
+* Add new post thumbnails via Wordpress Settings &rarr; Media.
 
 = Future Plans =
 
-In the future, there will be support for changing the default option, and any other ideas I can come up with. Submit any other ideas at https://github.com/sewpafly/post-thumbnail-extras/issues.
+Submit any other ideas at https://github.com/sewpafly/post-thumbnail-extras/issues.
 
 == Installation ==
 
@@ -27,26 +27,34 @@ In the future, there will be support for changing the default option, and any ot
 
 Use the shortcode `[pt]` in your posts to quickly embed the featured image as a thumbnail. Use the attribute 'size' to change to a different post-thumbnail size (e.g. `[pt size='medium']`). You can also use any image in your media gallery if you know the id, by using the `id` attribute (`[pt id='100']`).
 
-Use the media library to quickly add this shortcode by pressing the "Insert shortcode button".
+Use the `link` attribute to wrap the image in a link. 
+* `link='file'` will create a link to the full size image.
+* `link='post'` will create a link to the attachment page.
+* `link='http...'` creates a link to any URL.
+
+Use the media library to quickly add this shortcode by pressing the "Insert shortcode" button.
 
 = Add/Delete Post Thumbnails =
 
 1. In Settings &rarr; Media, click the plus sign to add a new post thumbnail. 
-2. Update the width/height and whether or not the post-thumbnail should be cropped to an exact size. (If the width or height is set to 0, that boundary constraint is not enforced). Make sure you click the "save" button so that the changes are stored in the database.
+2. Update the width/height and whether or not the post-thumbnail should be cropped to an exact size. (If the width or height is set to 0, that boundary constraint is not enforced -- effectively, it's infinite). Make sure you click the "save" button so that the changes are stored in the database.
 
 == Frequently Asked Questions ==
 
 = Did you even test this? =
 
-Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems](https://github.com/sewpafly/post-thumbnail-extra/issues) and I'll see what I can do.
+Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems](https://github.com/sewpafly/post-thumbnail-extras/issues) and I'll see what I can do.
 
 == Screenshots ==
 
 1. In Settings &rarr; Media, click the plus sign to add a new post thumbnail. 
-2. Update the width/height and whether or not the post-thumbnail should be cropped to an exact size. (If the width or height is set to 0, that boundary constraint is not enforced). Make sure you click the "save" button so that the changes are stored in the database.
-3. In the media editor, you can choose to insert a shortcode of a single picture with the new button.
+2. Update the width/height and whether or not the post-thumbnail should be cropped to an exact size. (If the width or height is set to 0, that boundary constraint is not enforced). Make sure you click the "Save Changes" button so that the changes are stored in the database.
+3. In the media editor, you can choose to insert a shortcode of a single picture with the "Insert shortcode" button.
 
 == Changelog ==
+
+= 4.0 =
+* Added alignment and link options to the shortcode
 
 = 3.0 =
 * Shortcode Creation with the Media Library
@@ -59,5 +67,5 @@ Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems]
 * Initial cut
 
 == Upgrade Notice ==
-= 3.0 =
-Integration with the Media Library for shortcode creation
+= 4.0 =
+Better shortcodes
