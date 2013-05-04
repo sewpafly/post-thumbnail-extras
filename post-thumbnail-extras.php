@@ -4,7 +4,7 @@ Plugin name: Post Thumbnail Extras
 Plugin URI: https://github.com/sewpafly/post-thumbnail-extras
 Author: sewpafly
 Author URI: http://sewpafly.github.io/post-thumbnail-editor/
-Version: 4.0-alpha
+Version: 4.0
 Description: Little things that make using post thumbnails easier
 */
 
@@ -15,7 +15,7 @@ define( 'PTX_DOMAIN', 'post-thumbnail-extras' );
 define( 'PTX_PLUGINURL', plugins_url(basename( dirname(__FILE__))) . "/");
 
 class PostThumbnailExtras {
-	public function __construct(){
+	public function __construct() {
 		// Wordpress hooks and settings
 		add_action( 'init', array( $this, 'i18n' ) );
 
@@ -28,7 +28,7 @@ class PostThumbnailExtras {
 	/**
 	 * Internationalization and Localization
 	 */
-	public function i18n(){
+	public function i18n() {
 		$locale = apply_filters( 'plugin_locale', get_locale(), PTX_DOMAIN );
 		load_textdomain( PTX_DOMAIN
 			, WP_LANG_DIR.'/'.PTX_DOMAIN.'/'.PTX_DOMAIN.'-'.$locale.'.mo' );
@@ -41,7 +41,7 @@ class PostThumbnailExtras {
 		, 'php/options.php'
 	);
 
-	private function load_requires(){
+	private function load_requires() {
 		$path = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
 		foreach ( $this->requires as $require ){
 			require( $path . $require );

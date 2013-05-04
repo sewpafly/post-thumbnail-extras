@@ -3,7 +3,7 @@ Contributors: sewpafly
 Donate link: https://www.wepay.com/donate/34543
 Tags: post-thumbnail, post thumbnail, featured image, awesome, media library, shortcode, shortcodes
 Requires at least: 2.5
-Tested up to: 3.5.1
+Tested up to: 3.6
 Stable tag: trunk
 License: GPLv2
 
@@ -32,7 +32,7 @@ Use the `link` attribute to wrap the image in a link.
 * `link='post'` will create a link to the attachment page.
 * `link='http...'` creates a link to any URL.
 
-Use the media library to quickly add this shortcode by pressing the "Insert shortcode" button.
+Use the media library to quickly add this shortcode for the selected image by pressing the "Insert shortcode" button.
 
 = Add/Delete Post Thumbnails =
 
@@ -55,6 +55,7 @@ Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems]
 
 = 4.0 =
 * Added alignment and link options to the shortcode
+* Wordpress 3.6-beta2 fix
 
 = 3.0 =
 * Shortcode Creation with the Media Library
@@ -68,4 +69,4 @@ Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems]
 
 == Upgrade Notice ==
 = 4.0 =
-Better shortcodes
+Better shortcodes and bug fixes

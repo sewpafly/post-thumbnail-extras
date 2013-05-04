@@ -5,7 +5,7 @@ class PTXOptions {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 
 		if ( false !== $ptx_post_thumbnails = get_option( 'ptx_post_thumbnails' ) ) {
-			foreach ( get_option( 'ptx_post_thumbnails' ) as $thumbnail ){
+			foreach ( $ptx_post_thumbnails as $thumbnail ){
 				add_image_size( $thumbnail['name']
 					, $thumbnail['width']
 					, $thumbnail['height']
