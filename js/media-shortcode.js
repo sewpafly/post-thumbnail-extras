@@ -74,9 +74,13 @@
 
    $(function(){ 
       // Get the content frame - This is _the_ instance of the MediaFrame created above
-      var frame = wp.media.editor.add('content')
       // Set a trigger to call our function when our button is pressed
-      frame.on('ptx_shortcode', _.bind(createPTXShortcode, frame));
+      var ptx_editor_add = _.bind(wp.media.editor.add, wp.media.editor);
+      wp.media.editor.add = function(id, options) {
+         var frame = ptx_editor_add(id, options);
+         frame.on('ptx_shortcode', _.bind(createPTXShortcode, frame));
+         return frame;
+      };
    });
 
 })(jQuery)
