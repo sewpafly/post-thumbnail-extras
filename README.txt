@@ -28,6 +28,7 @@ Submit any other ideas at https://github.com/sewpafly/post-thumbnail-extras/issu
 Use the shortcode `[pt]` in your posts to quickly embed the featured image as a thumbnail. Use the attribute 'size' to change to a different post-thumbnail size (e.g. `[pt size='medium']`). You can also use any image in your media gallery if you know the id, by using the `id` attribute (`[pt id='100']`).
 
 Use the `link` attribute to wrap the image in a link. 
+
 * `link='file'` will create a link to the full size image.
 * `link='post'` will create a link to the attachment page.
 * `link='http...'` creates a link to any URL.
@@ -54,19 +55,25 @@ Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems]
 == Changelog ==
 
 = 4.0 =
+
 * Added alignment and link options to the shortcode
 * Wordpress 3.6-beta2 fix
 
 = 3.0 =
+
 * Shortcode Creation with the Media Library
 * Display post thumbnail information for thumbnails created by other plugins and themes
 
 = 2.0 =
+
 * CRUD (Create/Read/Update/Delete) operations on post-thumbnails
 
 = 1.0 =
+
 * Initial cut
 
 == Upgrade Notice ==
+
 = 4.0 =
+
 Better shortcodes and bug fixes
