@@ -17,7 +17,7 @@ class PTXOptions {
 
 	public function admin_init() {
 		add_settings_field( 'ptx-post-thumbnails'
-			, '<b>' . __( 'Post Thumbnail Extra Sizes', PTX_DOMAIN ) . '</b>'
+			, '<b>' . __( 'Post Thumbnail Extras', PTX_DOMAIN ) . '</b>'
 				. '&nbsp;<a class="ptx-add-thumb" href="#">+</a>'
 			, array( $this, 'create_post_thumbnails_html' )
 			, 'media'
@@ -42,7 +42,7 @@ class PTXOptions {
 	 */
 	public function create_post_thumbnails_html() {
 		$ptx_post_thumbnails = get_option( 'ptx_post_thumbnails' );
-		$output = "</td></tr>";
+		$output = "%s</td></tr>";
 		if ( isset( $ptx_post_thumbnails ) and is_array( $ptx_post_thumbnails ) ){
 			foreach ( $ptx_post_thumbnails as $thumbnail ){
 				//print_r($thumbnail);
@@ -55,35 +55,64 @@ class PTXOptions {
 		$output .= <<<EOT
 		<script type="text/javascript" charset="utf-8">
 			(function($){
+
+				// Check for pending operations
+				var pending = false;
+				$(window).on("beforeunload", function(e) {
+					if (e.target.activeElement.name == "submit")
+						return;
+					if (pending) {
+						return "%s";
+					}
+				})
+
+				$("body").on("change", "input", function(){
+				   pending = true;
+				});
+
 				$(function(){
 					var post_template = $('#ptx-template').html(), counter = 0;
 					$('.ptx-add-thumb').click(function(e){
+						pending = true;
 						e.preventDefault();
 						var html = post_template.replace(/new-name/g, 'new-name-' + counter++);
 						$(this).parents('tr').siblings().last().after($(html));
 					});
 					$('body').delegate('.ptx-delete-thumb', 'click', function(e){
+						pending = true;
 						e.preventDefault();
 						$(this).parents('tr').first().remove();
 					});
 				})
+
 			})(jQuery);
 		</script>
 		<style type="text/css" media="all">
+			.ptx-section {
+				width: 300px;
+			}
 			.ptx-add-thumb {
+				bottom: -2px;
 				color: #44bb44 !important;
 				font-size: 1.5em;
 				font-weight: bold;
+				position: relative;
 				text-decoration: none;
 			}
 			.ptx-delete-thumb {
 				color: red;
 				font-size: smaller;
 			}
+			.ptx-thumb-name {
+				position:relative;
+				left: -3px;
+			}
 		</style>
 
 EOT;
-		echo( $output );
+		echo( sprintf( $output
+			, __( "Create additional post thumbnail sizes here:")
+			, __( "There are pending changes, are you sure that you want to leave?" ) ) );
 	}
 
 	private static function thumbnail_html( $thumbnail = NULL ) {

@@ -3,7 +3,7 @@ Contributors: sewpafly
 Donate link: https://www.wepay.com/donate/34543
 Tags: post-thumbnail, post thumbnail, featured image, awesome, media library, shortcode, shortcodes
 Requires at least: 2.5
-Tested up to: 3.6
+Tested up to: 3.8
 Stable tag: trunk
 License: GPLv2
 
@@ -54,6 +54,11 @@ Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems]
 
 == Changelog ==
 
+= 5.0 = 
+
+* Updated for wordpress 3.8
+* Added code to check for pending operations on the Options &rarr; Media screen.
+
 = 4.0 =
 
 * Added alignment and link options to the shortcode
@@ -74,6 +79,6 @@ Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems]
 
 == Upgrade Notice ==
 
-= 4.0 =
+= 5.0 =
 
-Better shortcodes and bug fixes
+Upgrade for wordpress 3.8 and bug fixes
