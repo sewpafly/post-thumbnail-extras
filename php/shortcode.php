@@ -73,10 +73,9 @@ class PTXShortcode {
 	 * Get the list of image sizes
 	 */
 	public function image_sizes ( $sizes ) {
-		$potential_sizes = get_intermediate_image_sizes();
-		foreach ( $potential_sizes as $size ) {
-			if ( 'post-thumbnail' != $size && ! in_array( $size, $sizes ) ) {
-				$sizes[$size] = $size;
+		if ( false !== $ptx_post_thumbnails = get_option( 'ptx_post_thumbnails' ) ) {
+			foreach ( $ptx_post_thumbnails as $thumbnail ){
+				$sizes[$thumbnail['name']] = $thumbnail['name'];
 			}
 		}
 		return $sizes;
