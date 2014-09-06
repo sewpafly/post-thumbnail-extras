@@ -4,7 +4,7 @@ Plugin name: Post Thumbnail Extras
 Plugin URI: https://github.com/sewpafly/post-thumbnail-extras
 Author: sewpafly
 Author URI: http://sewpafly.github.io/post-thumbnail-editor/
-Version: 5.0
+Version: 5.1
 Description: Little things that make using post thumbnails easier
 */
 

@@ -1,9 +1,9 @@
 === Post Thumbnail Extras ===
 Contributors: sewpafly
-Donate link: https://www.wepay.com/donate/34543
+Donate link: http://sewpafly.github.io/post-thumbnail-editor/extras/#toc_donations
 Tags: post-thumbnail, post thumbnail, featured image, awesome, media library, shortcode, shortcodes
 Requires at least: 2.5
-Tested up to: 4.0.x
+Tested up to: 4.0
 Stable tag: trunk
 License: GPLv2
 
