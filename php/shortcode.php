@@ -8,6 +8,7 @@ class PTXShortcode {
 		add_filter( 'media_view_strings', array( $this, 'media_strings' ), 10, 2 );
 		add_filter( 'image_size_names_choose', array( $this, 'image_sizes' ) );
 		add_filter( 'wp_prepare_attachment_for_js', array( $this, 'fix_attachment' ), 10, 3 );
+		add_filter( 'ptx_html_attrs', array( $this, 'html_attrs' ), 10, 2 );
 	}
 
 	/**
@@ -22,32 +23,49 @@ class PTXShortcode {
 	 */
 	public function parse_shortcode( $attrs ) {
 		$post = get_post();
-		extract( shortcode_atts( array(
+		$a = shortcode_atts( array(
 			'id' => get_post_thumbnail_id( $post->ID ),
 			'size' => 'thumbnail',
 			'class' => 'pt-post-thumbnail',
-			'link' => 'none'
-		), $attrs ) );
+			'link' => 'none',
+			'html_attrs' => 'class', // should be a list of attrs to look for (comma-separated)
+		), $attrs, 'ptx' );
 
-		if ( ! wp_attachment_is_image( $id ) ) return;
+		if ( ! wp_attachment_is_image( $a['id'] ) ) return;
 
-		$html = wp_get_attachment_image( $id, $size, false, array( 'class' => $class ) );
+		$html_attrs = apply_filters('ptx_html_attrs', array(), $a);
 
-		switch( $link ) {
+		$html = wp_get_attachment_image( $a['id'], $a['size'], false, $html_attrs );
+
+		switch( $a['link'] ) {
 		case 'none':
 			return $html;
 			break;
 		case 'file':
-			$link_url = wp_get_attachment_url( $id );
+			$link_url = wp_get_attachment_url( $a['id'] );
 			break;
 		case 'post':
-			$link_url = get_attachment_link( $id );
+			$link_url = get_attachment_link( $a['id'] );
 			break;
 		default:
-			$link_url = $link;
+			$link_url = $a['link'];
 		}
 
 		return "<a href='$link_url'>$html</a>";
+	}
+
+	/**
+	 * Add attributes to the html src
+	 * @param $attrs that have been defined already
+	 * @param $attrs defined from the shortcode
+	 */
+	public function html_attrs( $attrs, $shortcode_attrs ) {
+		foreach ( explode(',', $shortcode_attrs['html_attrs']) as $attr) {
+			if ( in_array( $attr, $shortcode_attrs ) ) {
+				$attrs[$attr] = $shortcode_attrs[$attr];
+			}
+		}
+		return $attrs;
 	}
 
 	/**

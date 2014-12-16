@@ -3,7 +3,7 @@ Contributors: sewpafly
 Donate link: http://sewpafly.github.io/post-thumbnail-editor/extras/#toc_donations
 Tags: post-thumbnail, post thumbnail, featured image, awesome, media library, shortcode, shortcodes
 Requires at least: 2.5
-Tested up to: 4.0
+Tested up to: 4.0.x
 Stable tag: trunk
 License: GPLv2
 
@@ -53,6 +53,11 @@ Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems]
 3. In the media editor, you can choose to insert a shortcode of a single picture with the "Insert shortcode" button.
 
 == Changelog ==
+
+= 6.0 =
+
+* Added `ptx_html_attrs` filter for modifying the html output
+* Fixed the `shortcode_atts` so that the `shortcode_atts_ptx` filter will fire
 
 = 5.0 = 
 
