@@ -84,6 +84,6 @@ Yes. No. Sort of. Thanks for asking. But [let me know if you're having problems]
 
 == Upgrade Notice ==
 
-= 5.0 =
+= 6.0 =
 
-Upgrade for wordpress 3.8 and bug fixes
+Added some filters
